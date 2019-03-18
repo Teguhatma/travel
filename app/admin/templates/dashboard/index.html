@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+{% block head %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>
+        {% if title %} {{ title }} {% else %} Selamat Datang {% endif %}
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+{% endblock %}
+{% block body %}
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+            <!-- Start Jasa -->
+                <a href="{{ url_for('admin.create') }}">Tambah Data</a>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Paket</th>
+                            <th scope="col">Kategori</th>
+                            <th>Content</th>
+                            <th>Image</th>
+                            <th colspan="2" scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <th scope="row">{{ product.id }}</th>
+                            <td>{{ product.title }}</td>
+                            <td>{{ product.category }}</td>
+                            <td>{{ product.content }}</td>
+                            <td><img src="{{ url_for('admin.static', filename='uploads/images/'+ product.filename_images ) }}" alt="{{ product.filename_images }}" width="200px" ></td>
+                            <td><a class="button" href="{{ url_for('admin.edit_product', id=product.id, title=product.title) }}">Edit</a></td>            
+                            <td>
+                                <form action="{{ url_for('admin.delete_product', id=product.id) }}", method="POST">
+                                    <button class="button">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-3">
+                <form action="{{ url_for('admin.dashboard') }}" method="POST">
+                    {{ form.csrf_token() }}
+                    {{ form.title.label() }}
+                    {{ form.title() }}
+                    {{ form.submit() }}
+                </form>
+                <p>Kategori</p>
+                <ul>
+                    {% for category in categorys %}
+                    <li>{{ category.category }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>  
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+{% endblock %}
+
+</html>
