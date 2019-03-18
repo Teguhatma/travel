@@ -32,14 +32,16 @@
                 {{ form.subject.label() }}
                 {{ form.subject(class="form-control") }}
             </div>
-            <div class="form-group">
-                {{ form.telp.label() }}
+            <div class="">
+                
+            </div>
+            {{ form.telp.label() }}
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    {{ form.country(class="btn btn-outline-secondary dropdown-toggle") }}
+                </div>
                 {{ form.telp(class="form-control") }}
             </div>
-            <div class="form-group">
-                    {{ form.country.label() }}
-                    {{ form.country(class="form-control") }}
-                </div>
             <div class="form-group">
                 {{ form.messages.label() }}
                 {{ form.messages(class="form-control", rows="3") }}

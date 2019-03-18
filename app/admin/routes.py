@@ -1,7 +1,7 @@
 from app import db
 from app.admin import admin
 from flask import render_template, url_for, redirect, request, flash
-from app.models import Products, Category, Contact
+from app.models import Products, Category, Contact, Country
 from .forms import ProductForm, CategoryForm
 from werkzeug.utils import secure_filename
 from config import Config
@@ -88,5 +88,5 @@ def edit_product(id, title):
 
 @admin.route('/contact')
 def contact():
-    contact = db.session.query(Contact.id, Contact.email, Contact.name, Contact.telp, Contact.messages, Category.category).join(Category).order_by(Contact.timestamp.desc()).all()
+    contact = db.session.query(Contact.id, Contact.email, Contact.name, Country.code, Contact.telp, Contact.messages, Category.category).join(Category, Country).order_by(Contact.timestamp.desc()).all()
     return render_template('contact.html', title='Hubungi Kami', contact=contact)

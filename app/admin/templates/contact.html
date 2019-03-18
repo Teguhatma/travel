@@ -32,7 +32,7 @@
                     <td>{{ contacts.name }}</td>
                     <td>{{ contacts.email }}</td>
                     <td>{{ contacts.category }}</td>
-                    <td>{{ contacts.telp }} <a target="_blank" href="https://wa.me/6285358134413">WA</a></td>
+                    <td>+{{ contacts.code }} {{ contacts.telp }} <a target="_blank" href="https://wa.me/{{ contacts.code }}{{ contacts.telp }}">WA</a></td>
                     <td>{{ contacts.messages }}</td>
                 </tr>
                 {% endfor %}
