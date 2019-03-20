@@ -1,0 +1,13 @@
+
+{% block body %}
+<form action="" method="POST" enctype="multipart/form-data">
+    {{ form.csrf_token() }}
+    {{ form.title.label() }}
+    {{ form.title() }}
+    {{ form.filename_images.label() }}
+    {{ form.filename_images() }}
+    {{ form.content.label() }}
+    {{ form.content() }}
+    {{ form.submit() }}
+</form>
+{% endblock %}

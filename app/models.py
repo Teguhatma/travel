@@ -1,8 +1,9 @@
-from app import db
+from app import db, login
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from flask_sqlalchemy import orm
 from datetime import datetime
-
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 
 class Category(db.Model):
     __tablename__ = 'kategori'
@@ -59,6 +60,7 @@ class Description(db.Model):
     email = db.Column(db.String(120), unique=True)
     address = db.Column(db.String(64))
     telp = db.Column(db.String(15))
+    deskripsi = db.Column(db.String())
 
 
 class Country(db.Model):
@@ -71,3 +73,20 @@ class Country(db.Model):
     
 def choice_country():
     return Country.query.order_by(Country.code.asc())
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), unique=True)
+    email = db.Column(db.String(120), unique=True)
+    filename_images = db.Column(db.String(64), unique=True)
+    password_hash = db.Column(db.String(120))
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+    
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+@login.user_loader
+def load_user():
+    return User.query.get(int(id))

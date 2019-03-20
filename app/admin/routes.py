@@ -1,8 +1,8 @@
 from app import db
 from app.admin import admin
 from flask import render_template, url_for, redirect, request, flash
-from app.models import Products, Category, Contact, Country
-from .forms import ProductForm, CategoryForm
+from app.models import Products, Category, Contact, Country, Description, Layanan
+from .forms import ProductForm, CategoryForm, DescriptionForm, LayananForm
 from werkzeug.utils import secure_filename
 from config import Config
 import os, uuid
@@ -14,16 +14,15 @@ def dashboard():
     products = db.session.query(Products.id, Products.filename_images, Products.content, Products.title, Category.category).join(Category).order_by(Products.timestamp.desc()).all()
     categorys = Category.query.all()
     form = CategoryForm()
-    
     if form.validate_on_submit():
         category = Category(category=form.title.data)
         db.session.add(category)
         db.session.commit()
         return redirect(url_for('admin.dashboard'))
-    return render_template('dashboard/index.html', title='Dashboard', products=products, categorys=categorys, form=form)
+    return render_template('index.html', title='Dashboard', products=products, categorys=categorys, form=form)
 
-@admin.route('/create/product', methods=['POST','GET'])
-def create():
+@admin.route('/product/create', methods=['POST','GET'])
+def product_create():
     form = ProductForm()
     print('target folder: ' + path)
 
@@ -41,9 +40,9 @@ def create():
         db.session.add(products)
         db.session.commit()
         return redirect(url_for('admin.dashboard'))
-    return render_template('create.html', title='Tambah Data', form=form)
+    return render_template('product_create.html', title='Tambah Data', form=form)
 
-@admin.route('/delete/<int:id>', methods=['POST', 'GET'])
+@admin.route('/product/<int:id>/delete', methods=['POST', 'GET'])
 def delete_product(id):
     products = Products.query.filter_by(id=id).first_or_404()
     old = products.filename_images
@@ -53,8 +52,8 @@ def delete_product(id):
     db.session.commit()
     return redirect(url_for('admin.dashboard'))
 
-@admin.route('/update/<int:id>/<title>', methods=['GET','POST'])
-def edit_product(id, title):
+@admin.route('/product/<int:id>/<title>/update', methods=['GET','POST'])
+def product_update(id, title):
     print("Target Folder : " + path)
 
     form = ProductForm()
@@ -84,9 +83,95 @@ def edit_product(id, title):
         form.category.data = products.kategori_id
         form.content.data = products.content
         form.filename_images.data = products.filename_images
-    return render_template('edit.html', form=form, product=products, title='Edit Data')
+    return render_template('product_create.html', form=form, product=products, title='Edit Data')
 
-@admin.route('/contact')
+@admin.route('/contact/lihat')
 def contact():
     contact = db.session.query(Contact.id, Contact.email, Contact.name, Country.code, Contact.telp, Contact.messages, Category.category).join(Category, Country).order_by(Contact.timestamp.desc()).all()
     return render_template('contact.html', title='Hubungi Kami', contact=contact)
+
+@admin.route('/deskripsi/tambah', methods=['GET', 'POST'])
+def description():
+    form = DescriptionForm()
+    if form.validate_on_submit():
+        deskripsi = Description(email=form.email.data, address=form.address.data, telp=form.telp.data, deskripsi=form.deskripsi.data)
+        db.session.add(deskripsi)
+        db.session.commit()
+        return redirect(url_for('admin.dashboard'))
+    return render_template('deskripsi.html', form=form)
+
+@admin.route('/deskripsi/<int:id>/edit', methods=['GET','POST'])
+def edit_deskripsi(id):
+    deskripsi = Description.query.filter_by(id=id).first_or_404()
+    form = DescriptionForm()
+    if form.validate_on_submit():
+        deskripsi.email = form.email.data
+        deskripsi.telp = form.telp.data
+        deskripsi.address = form.address.data
+        deskripsi.deskripsi = form.deskripsi.data
+        db.session.commit()
+        return redirect(url_for('admin.lihat_deskripsi'))
+    elif request.method == 'GET':
+        form.email.data = deskripsi.email
+        form.telp.data = deskripsi.telp
+        form.address.data = deskripsi.address
+        form.deskripsi.data = deskripsi.deskripsi
+    return render_template('deskripsi.html', form=form)
+
+
+@admin.route('/layanan/tambah', methods=['GET', 'POST'])
+def layanan_create():
+    form = LayananForm()
+    print('target folder: ' + path)
+
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+    if form.validate_on_submit():
+        filename = secure_filename(form.filename_images.data.filename)
+        ext = filename.split('.')[-1]
+        filename = "%s.%s" % (uuid.uuid4().hex, ext)
+        destination_save = "/".join([path, filename])
+        form.filename_images.data.save(destination_save)
+
+        layanan = Layanan(title=form.title.data, filename_images=filename, content=form.content.data)
+        db.session.add(layanan)
+        db.session.commit()
+        return redirect(url_for('admin.dashboard'))
+    return render_template('layanan_create.html', title='Tambah Data', form=form)
+
+@admin.route('/layanan/<int:id>/update', methods=['GET', 'POST'])
+def layanan_edit(id):
+    layanan = Layanan.query.filter_by(id=id).first_or_404()
+    form = LayananForm()
+    if form.validate_on_submit():
+        old = layanan.filename_images
+        destination_del = "/".join([path, old])
+        os.remove(destination_del)
+
+        filename = secure_filename(form.filename_images.data.filename)
+        ext = filename.split('.')[-1]
+        filename = "%s.%s" % (uuid.uuid4().hex, ext)
+        destination_save = "/".join([path, filename])
+        form.filename_images.data.save(destination_save)
+
+        layanan.title = form.title.data
+        layanan.filename_images = filename
+        layanan.content = form.content.data
+        db.session.commit()
+        return redirect(url_for('admin.lihat_deskripsi'))
+    elif request.method == 'GET':
+        form.title.data = layanan.title
+        form.content.data = layanan.content
+        form.filename_images.data = layanan.filename_images
+    return render_template('layanan_edit.html', form=form)
+
+@admin.route('/layanan/<int:id>/delete', methods=['POST', 'GET'])
+def layanan_delete(id):
+    layanan = Layanan.query.filter_by(id=id).first_or_404()
+    old = layanan.filename_images
+    destination_del = "/".join([path, old])
+    os.remove(destination_del)
+    db.session.delete(layanan)
+    db.session.commit()
+    return redirect(url_for('admin.dashboard'))

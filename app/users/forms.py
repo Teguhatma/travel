@@ -11,6 +11,6 @@ class ContactForm(FlaskForm):
     telp = StringField('telp', validators=[DataRequired()])
     subject = StringField('subject', validators=[DataRequired()])
     category = QuerySelectField(u'Category', validators=[DataRequired()], query_factory=choice_category, allow_blank=True, get_label='category', get_pk=lambda x: x.id, blank_text=(u'Kategori'))
-    country = QuerySelectField(u'Country', validators=[DataRequired()],query_factory=choice_country, get_pk=lambda x: x.id, get_label='name')
+    country = QuerySelectField(u'Country', validators=[DataRequired()], query_factory=choice_country, get_pk=lambda x: x.id, get_label='name')
     messages = TextAreaField('Pesan', validators=[DataRequired()])
     submit = SubmitField('Kirim')

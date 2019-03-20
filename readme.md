@@ -1,13 +1,12 @@
 Fitur:
 	add Kategori (done)
-	delete Kategori (yet)
 	add Products (done)
 	delete Products (done)
-	Edit Products (yet )
-	add deskripsi (yet)
-	edit Deskripsi (yet)
+	delete Kategori (yet)
+	Edit Products (yet)
+	edit Deskripsi (done)
 	contact form (done) -> feedback to mail (done)
-	add layanan kami (yet)
+	add layanan kami (done)
 	edit layanan kami (yet)
 	delete layanan kami (yet)
 	badges -> kontak masuk (dashboard)
@@ -15,6 +14,7 @@ Fitur:
 	hak akses:
 		admin:bisa semuanya
 		karyawan: Product, Layanan, Kategori -> (CRUD)
+	menambahkan sosmed di deskripsimodel(yet)
 	
 
-Bluprint(yet)
+Bluprint(done)
