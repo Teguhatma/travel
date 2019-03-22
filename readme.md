@@ -22,5 +22,3 @@ duplicate title di semua db
 --contact.email(yet)-> routesnya masih error
 forgot password(yet)
 badges -> pemberitahuan ada kontak masuk (dashboard)(yet)
-
-edit.product with same title still error
