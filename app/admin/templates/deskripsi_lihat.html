@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>{% if title %}{{ title }} {%else%} Selamat Datang {%endif%}</title>
+  {% include 'loader/_style.html' %}
+</head>
+
+<body id="page-top">
+  {% include 'loader/_navbar.html' %}
+  <div id="wrapper">
+    <!-- Sidebar -->
+    {% include 'loader/_sidebar.html' %}
+    <div id="content-wrapper">
+      <div class="container-fluid">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">Overview</li>
+        </ol>
+
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-table"></i>
+            Tabel Produk</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Handphone</th>
+                    <th>Alamat</th>
+                    <th>Sosial Media</th>
+                    <th>Deskripsi</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for deskripsi in deskripsi %}
+                  <tr>
+                    <th scope="row">{{ deskripsi.id }}</th>
+                    <td>{{ deskripsi.email }}</td>
+                    <td>{{ deskripsi.telp }}</td>
+                    <td>{{ deskripsi.address }}</td>
+                    <td>
+                      <a target="_blank" href="https://wa.me/{{ deskripsi.sm_wa }}"><i class="fab fa-whatsapp"></i></a>
+                      <a target="_blank" href="{{ deskripsi.sm_fb }}"><i class="fab fa-facebook"></i></a>
+                      <a target="_blank" href="{{ deskripsi.sm_ig }}"><i class="fab fa-instagram"></i></a>
+                    </td>
+                    <td>{{ deskripsi.deskripsi }}</td>
+                    <td><a href="{{ url_for('admin.deskripsi_edit', id=deskripsi.id) }}">Edit</a></td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+      {% include 'loader/_footer.html' %}
+    </div>
+    <!-- /.content-wrapper -->
+  </div>
+  <!-- /#wrapper -->
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- Logout Modal-->
+  {% include 'loader/_modal.html' %}
+  {% include 'loader/_js.html' %}
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% if title %}{{ title }} {%else%} Selamat Datang {%endif%}</title>
+    {% include 'loader/_style.html' %}
+</head>
+
+<body id="page-top">
+    {% include 'loader/_navbar.html' %}
+    <div id="wrapper">
+        <!-- Sidebar -->
+        {% include 'loader/_sidebar.html' %}
+        <div id="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Overview</li>
+                </ol>
+                <!-- DataTables Example -->
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fas fa-table"></i>
+                        Tabel Data Layanan</div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Nama Layanan</th>
+                                        <th scope="col">Gambar</th>
+                                        <th>Deskripsi</th>
+                                        <th colspan="2">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for layanan in layanan %}
+                                    <tr>
+                                        <th scope="row">{{ layanan.id }}</th>
+                                        <td>{{ layanan.title }}</td>
+                                        <td><img src=" {{ url_for('admin.static', filename='uploads/images/'+ layanan.filename_images ) }}"
+                                                alt="{{ layanan.filename_images }}" width="200px"></td>
+                                        </td>
+                                        <td>{{ layanan.content | striptags }}</td>
+                                        <td>
+                                            <a href="{{ url_for('admin.layanan_delete', id=layanan.id) }}">delete</a>
+                                        </td>
+                                        <td>Edit</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+            {% include 'loader/_footer.html' %}
+        </div>
+        <!-- /.content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    {% include 'loader/_modal.html' %}
+    {% include 'loader/_js.html' %}
+</body>
+
+</html>

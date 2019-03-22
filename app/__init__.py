@@ -15,6 +15,7 @@ mail = Mail()
 pagedown = PageDown()
 ckeditor = CKEditor()
 
+
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
@@ -24,15 +25,24 @@ def create_app(config_class=Config):
     mail.init_app(app)
     migrate.init_app(app, db)
     login.init_app(app)
+    login.login_view = "auth.login"
     pagedown.init_app(app)
     ckeditor.init_app(app)
 
-
     from app.admin import admin
-    app.register_blueprint(admin, url_prefix='/admin')
+
+    app.register_blueprint(admin, url_prefix="/admin")
+
     from app.users import users
+
     app.register_blueprint(users)
+
     from app.auth import auth
-    app.register_blueprint(auth, url_prefix='/auth')
+
+    app.register_blueprint(auth, url_prefix="/auth")
+
+    from app.errors import errors
+
+    app.register_blueprint(errors)
 
     return app

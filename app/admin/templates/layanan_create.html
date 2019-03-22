@@ -1,88 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>{% if title %}{{ title }} {%else%} Selamat Datang {%endif%}</title>
-        {% include 'loader/_style.html' %}
-        {{ pagedown.html_head() }}
-    </head>
-    <body id="page-top">
-        {% include 'loader/_navbar.html' %}
-        <div id="wrapper">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% if title %}{{ title }} {%else%} Selamat Datang {%endif%}</title>
+    {% include 'loader/_style.html' %}
+    {{ pagedown.html_head() }}
+</head>
+
+<body id="page-top">
+    {% include 'loader/_navbar.html' %}
+    <div id="wrapper">
         <!-- Sidebar -->
         {% include 'loader/_sidebar.html' %}
-            <div id="content-wrapper">
-                <div class="container-fluid">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="#">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item active">Overview</li>
-                    </ol>
-                    <div class="card mb-3">
-                        <div class="card-header">Tambah Data Produk</div>
-                        <div class="card-body">
-                            <form action="{{ url_for('admin.layanan_create') }}" enctype="multipart/form-data" method="POST">
-                                {{ form.csrf_token() }}
-                                <div class="form-group">
-                                    <div class="form-row">
-                                        <div class="col-md-8">
-                                            <div class="form-label-group">
-                                                {{ form.title(type="text", id="namaProduk", class="form-control", placeholder="Nama Layanan", required="required", autofocus="autofocus")}}
-                                                <label for="namaProduk">Nama Layanan</label>
-                                            </div>
+        <div id="content-wrapper">
+            <div class="container-fluid">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Overview</li>
+                </ol>
+                <div class="card mb-3">
+                    <div class="card-header">Tambah Data Layanan</div>
+                    <div class="card-body">
+                        <form action="" enctype="multipart/form-data" method="POST">
+                            {{ form.csrf_token() }}
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-8">
+                                        <div class="form-label-group">
+                                            {{ form.title(type="text", id="namaProduk", class="form-control", placeholder="Nama Layanan", required="required", autofocus="autofocus")}}
+                                            <label for="namaProduk">Nama Layanan</label>
+                                            {% for error in form.title.errors %}
+                                            <span style="color: red;">[{{ error }}]</span>
+                                            {% endfor %}
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <div class="input-group">
-                                                    <div class="custom-file">
-                                                        {{ form.filename_images(class="custom-file-input", id="inputGroupFile04")}}
-                                                        <label class="custom-file-label" for="inputGroupFile04">{{ form.filename_images.label()}}</label>
-                                                    </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    {{ form.filename_images(class="custom-file-input", id="inputGroupFile04")}}
+                                                    <label class="custom-file-label"
+                                                        for="inputGroupFile04">{{ form.filename_images.label()}}</label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="form-label-group">
-                                        {{ ckeditor.config(name='content', language='en', width=1000)}}
-                                        {{ ckeditor.load(pkg_type='basic')}}
-                                        {{ form.content(class="form-control", placeholder="Tentang Layanan", required="required", rows="7")}}
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-label-group">
+                                    {{ ckeditor.config(name='content', language='en', width=1000)}}
+                                    {{ ckeditor.load(pkg_type='basic')}}
+                                    {{ form.content(class="form-control", placeholder="Tentang Layanan", required="required", rows="7")}}
                                 </div>
-                                {{ form.submit(class="btn btn-primary btn-block") }}
-                            </form>
-                        </div>
+                            </div>
+                            {{ form.submit(class="btn btn-primary btn-block") }}
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% include 'loader/_js.html' %}
-    </body>
+    </div>
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    {% include 'loader/_modal.html' %}
+    {% include 'loader/_js.html' %}
+</body>
+
 </html>

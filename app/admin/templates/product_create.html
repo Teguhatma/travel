@@ -1,96 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>{% if title %}{{ title }} {%else%} Selamat Datang {%endif%}</title>
-        {% include 'loader/_style.html' %}
-    </head>
-    <body id="page-top">
-        {% include 'loader/_navbar.html' %}
-        <div id="wrapper">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% if title %}{{ title }} {%else%} Selamat Datang {%endif%}</title>
+    {% include 'loader/_style.html' %}
+</head>
+
+<body id="page-top">
+    {% include 'loader/_navbar.html' %}
+    <div id="wrapper">
         <!-- Sidebar -->
         {% include 'loader/_sidebar.html' %}
-            <div id="content-wrapper">
-                <div class="container-fluid">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="#">Dashboard</a>
-                        </li>
-                        <li class="breadcrumb-item active">Overview</li>
-                    </ol>
-                    <div class="card mb-3">
-                        <div class="card-header">Tambah Data Produk</div>
-                        <div class="card-body">
-                            <form action="{{ url_for('admin.product_create') }}" enctype="multipart/form-data" method="POST">
-                                {{ form.csrf_token() }}
-                                <div class="form-group">
-                                    <div class="form-row">
-                                        <div class="col-md-6">
-                                            <div class="form-label-group">
-                                                {{ form.title(type="text", id="namaProduk", class="form-control", placeholder="Nama Produk", required="required", autofocus="autofocus")}}
-                                                <label for="namaProduk">Nama Produk</label>
-                                            </div>
+        <div id="content-wrapper">
+            <div class="container-fluid">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url_for('admin.dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="">Produk</a></li>
+                    <li class="breadcrumb-item active">Tambah Data Produk</li>
+                </ol>
+                <div class="card mb-3">
+                    <div class="card-header">Tambah Data Produk</div>
+                    <div class="card-body">
+                        <form action="" enctype="multipart/form-data" method="POST">
+                            {{ form.csrf_token() }}
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            {{ form.title(type="text", id="namaProduk", class="form-control", placeholder="Nama Produk", required="required", autofocus="autofocus")}}
+                                            <label for="namaProduk">Nama Produk</label>
+                                            {% for error in form.title.errors %}
+                                            <span style="color: red;">[{{ error }}]</span>
+                                            {% endfor %}
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="form-label-group">
-                                                {{ form.price(id="hargaProduk", class="form-control", placeholder="Harga Produk")}}
-                                                <label for="hargaProduk">Harga Produk</label>
-                                            </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-label-group">
+                                            {{ form.price(id="hargaProduk", class="form-control", placeholder="Harga Produk")}}
+                                            <label for="hargaProduk">Harga Produk</label>
                                         </div>
-                                        <div class="col-md-3">
-                                            <div class="form-label-group">
-                                                {{ form.category(class="custom-select", placeholder="Kategori", required="required")}}
-                                            </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-label-group">
+                                            {{ form.category(class="custom-select", placeholder="Kategori", required="required")}}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            {{ form.filename_images(class="custom-file-input", id="inputGroupFile04")}}
-                                            <label class="custom-file-label" for="inputGroupFile04">{{ form.filename_images.label()}}</label>
-                                        </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        {{ form.filename_images(class="custom-file-input", id="inputGroupFile04")}}
+                                        <label class="custom-file-label"
+                                            for="inputGroupFile04">{{ form.filename_images.label()}}</label>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="form-label-group">
-                                            {{ ckeditor.config(name='content')}}
-                                            {{ ckeditor.load(pkg_type='basic')}}
-                                            {{ form.content(class="form-control", placeholder="Tentang Produk", required="required", rows="10")}}
-                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-label-group">
+                                    {{ ckeditor.config(name='content')}}
+                                    {{ ckeditor.load(pkg_type='basic')}}
+                                    {{ form.content(class="form-control", placeholder="Tentang Produk", required="required", rows="10")}}
                                 </div>
-                                {{ form.submit(class="btn btn-primary btn-block") }}
-                            </form>
-                        </div>
+                            </div>
+                            {{ form.submit(class="btn btn-primary btn-block") }}
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
-        <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {% include 'loader/_js.html' %}
-    </body>
+    </div>
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    {% include 'loader/_modal.html' %}
+    {% include 'loader/_js.html' %}
+</body>
+
 </html>

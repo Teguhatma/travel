@@ -1,24 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-{% block heads %}
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% if title %}{{title}}{% else %}Selamat Datang</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% if title %}{{ title }} {%else%} Selamat Datang {%endif%}</title>
+    {% include 'loader/_style.html' %}
 </head>
-{% endblock %}
-{% block body %}
-<body>
-    <form action="">
-        {{ form.csrf_token() }}
-        {{ form.username.label() }}
-        {{ form.username() }}
-        {{ form.password.label() }}
-        {{ form.password() }}
-        {{ form.remember() }}
-        {{ form.submit() }}
-    </form>
+
+<body class="bg-dark">
+  <div class="container">
+    <div class="card card-login mx-auto mt-5">
+      <div class="card-header">Login</div>
+      <div class="card-body">
+        <form method="POST">
+            {{ form.csrf_token() }}
+          <div class="form-group">
+            <div class="form-label-group">
+                {{ form.username(id="inputEmail", class="form-control", placeholder="Username", required="required", autofocus="autofocus")}}
+                <label for="inputEmail">Username</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-label-group">
+                {{ form.password(type="password", id="inputPassword", class="form-control", placeholder="Password", required="required")}}
+              <label for="inputPassword">Password</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="checkbox">
+              <label>
+                  {{ form.remember(type="checkbox", value="remember-me")}}
+                Remember Password
+              </label>
+            </div>
+          </div>
+          {{ form.submit(class="btn btn-primary btn-block")}}
+        </form>
+        <div class="text-center">
+          <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'loader/_js.html' %}
+
 </body>
-{% endblock %}
+
 </html>
