@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>{% if title %}{{ title }} {%else%} Selamat Datang {%endif%}</title>
-    {% include 'loader/_style.html' %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>{% if title %}{{ title }} {%else%} Selamat Datang {%endif%}</title>
+  {% include 'loader/_style.html' %}
 </head>
 
 <body class="bg-dark">
@@ -17,23 +17,35 @@
       <div class="card-header">Login</div>
       <div class="card-body">
         <form method="POST">
-            {{ form.csrf_token() }}
+          {{ form.csrf_token() }}
+          {% with errors = get_flashed_messages(category_filter=["error"]) %}
+          {% if errors %}
+          {%- for msg in errors %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ msg }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endfor -%}
+          {% endif %}
+          {% endwith %}
           <div class="form-group">
             <div class="form-label-group">
-                {{ form.username(id="inputEmail", class="form-control", placeholder="Username", required="required", autofocus="autofocus")}}
-                <label for="inputEmail">Username</label>
+              {{ form.username(id="inputEmail", class="form-control", placeholder="Username", required="required", autofocus="autofocus")}}
+              <label for="inputEmail">Username</label>
             </div>
           </div>
           <div class="form-group">
             <div class="form-label-group">
-                {{ form.password(type="password", id="inputPassword", class="form-control", placeholder="Password", required="required")}}
+              {{ form.password(type="password", id="inputPassword", class="form-control", placeholder="Password", required="required")}}
               <label for="inputPassword">Password</label>
             </div>
           </div>
           <div class="form-group">
             <div class="checkbox">
               <label>
-                  {{ form.remember(type="checkbox", value="remember-me")}}
+                {{ form.remember(type="checkbox", value="remember-me")}}
                 Remember Password
               </label>
             </div>

@@ -42,6 +42,7 @@
                                         <th>Category</th>
                                         <th>No. Handphone</th>
                                         <th>Messages</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -54,6 +55,8 @@
                                         <td>+{{ contacts.code }} {{ contacts.telp }} <a target="_blank"
                                                 href="https://wa.me/{{ contacts.code }}{{ contacts.telp }}">WA</a></td>
                                         <td>{{ contacts.messages }}</td>
+                                        <td><a href="{{ url_for('admin.contact_delete', id=contacts.id) }}">Delete</a>
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>

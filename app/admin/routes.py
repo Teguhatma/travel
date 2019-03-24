@@ -60,6 +60,7 @@ def product_lihat():
             Products.filename_images,
             Products.content,
             Products.title,
+            Products.slug,
             Category.category,
         )
         .join(Category)
@@ -73,7 +74,6 @@ def product_lihat():
 @login_required
 def product_create():
     form = ProductForm(current_user.username)
-    print("target folder: " + path)
 
     if not os.path.exists(path):
         os.makedirs(path)
@@ -110,13 +110,11 @@ def delete_product(id):
     return redirect(url_for("admin.dashboard"))
 
 
-@admin.route("/product/<int:id>/<string:slug>/update", methods=["GET", "POST"])
+@admin.route("/product/<int:id>/<slug>/update", methods=["GET", "POST"])
 @login_required
 def product_update(slug,id):
-    print("Target Folder : " + path)
-
+    products = Products.query.filter_by(id=id, slug=slug).first()
     form = EditProductForm()
-    products = Products.query.filter_by(slug=slug, id=id).first_or_404()
 
     if form.validate_on_submit():
         old = products.filename_images
@@ -143,7 +141,7 @@ def product_update(slug,id):
         form.content.data = products.content
         form.filename_images.data = products.filename_images
     return render_template(
-        "product_create.html", form=form, product=products, title="Edit Data"
+        "product_create.html", form=form, title="Edit Data"
     )
 
 
@@ -230,10 +228,10 @@ def layanan_create():
     return render_template("layanan_create.html", title="Tambah Data", form=form)
 
 
-@admin.route("/layanan/<int:id>/update", methods=["GET", "POST"])
+@admin.route("/layanan/<int:id>/<string:slug>/update", methods=["GET", "POST"])
 @login_required
-def layanan_edit(id):
-    layanan = Layanan.query.filter_by(id=id).first_or_404()
+def layanan_edit(slug, id):
+    layanan = Layanan.query.filter_by(id=id, slug=slug).first_or_404()
     form = EditLayananForm()
     if form.validate_on_submit():
         old = layanan.filename_images
@@ -250,7 +248,7 @@ def layanan_edit(id):
         layanan.filename_images = filename
         layanan.content = form.content.data
         db.session.commit()
-        return redirect(url_for("admin.lihat_deskripsi"))
+        return redirect(url_for("admin.layanan_lihat"))
     elif request.method == "GET":
         form.title.data = layanan.title
         form.content.data = layanan.content
@@ -269,3 +267,10 @@ def layanan_delete(id):
     db.session.commit()
     return redirect(url_for("admin.layanan_lihat"))
 
+@admin.route('/contact/<int:id>/delete')
+@login_required
+def contact_delete(id):
+    contact = Contact.query.filter_by(id=id).first_or_404()
+    db.session.delete(contact)
+    db.session.commit()
+    return redirect(url_for('admin.contact'))

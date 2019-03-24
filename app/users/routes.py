@@ -11,10 +11,10 @@ from wtforms.validators import ValidationError
 @users.route("/hubungi", methods=["GET", "POST"])
 def contact():
     form = ContactForm()
-    contacts = Contact.query.filter_by(email).first()
+    contacts = Contact.query.filter_by(email=form.email.data).first()
     if form.validate_on_submit():
-        if contacts is email.data:
-            raise ValidationError("Please use a different email")
+        if contacts is not None:
+            flash("Email sudah dipakai", "error")
         else:
             contact = Contact(
                 name=form.name.data,
@@ -33,7 +33,7 @@ def contact():
             )
             msg.body = form.messages.data
             mail.send(msg)
-            flash("Terimakasih telah menghubungi kami.")
+            flash("Terimakasih telah menghubungi kami.", "success")
             return redirect(url_for("users.contact"))
     return render_template("hubungi.html", form=form, title="Hubungi Kami")
 

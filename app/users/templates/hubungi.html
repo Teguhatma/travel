@@ -17,6 +17,18 @@
 
 <body>
     <div class="container">
+        {% with errors = get_flashed_messages(category_filter=["success"]) %}
+        {% if errors %}
+        <div class="alert-message block-message error">
+            <a class="close" href="#">×</a>
+            <ul>
+                {%- for msg in errors %}
+                <li>{{ msg }}</li>
+                {% endfor -%}
+            </ul>
+        </div>
+        {% endif %}
+        {% endwith %}
         <form action="" method="POST" enctype="multipart/form-data">
             {{ form.csrf_token() }}
             <div class="form-group">
@@ -26,9 +38,18 @@
             <div class="form-group">
                 {{ form.email.label() }}
                 {{ form.email(class="form-control", type="email") }}
-                {% for error in form.email.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
+                {% with errors = get_flashed_messages(category_filter=["error"]) %}
+                {% if errors %}
+                <div class="alert-message block-message error">
+                    <a class="close" href="#">×</a>
+                    <ul>
+                        {%- for msg in errors %}
+                        <li>{{ msg }}</li>
+                        {% endfor -%}
+                    </ul>
+                </div>
+                {% endif %}
+                {% endwith %}
             </div>
             <div class="form-group">
                 {{ form.category.label() }}

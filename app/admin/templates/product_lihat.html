@@ -39,6 +39,7 @@
                                         <th scope="col">Paket</th>
                                         <th scope="col">Kategori</th>
                                         <th>Content</th>
+                                        <th>Slug</th>
                                         <th>Image</th>
                                         <th colspan="2" scope="col">Action</th>
                                     </tr>
@@ -50,6 +51,7 @@
                                         <td>{{ product.title }}</td>
                                         <td>{{ product.category }}</td>
                                         <td>{{ product.content | striptags }}</td>
+                                        <td>{{ product.slug }}</td>
                                         <td><img src=" {{ url_for('admin.static', filename='uploads/images/'+ product.filename_images ) }}"
                                                 alt="{{ product.filename_images }}" width="200px"></td>
                                         <td><a class="button"

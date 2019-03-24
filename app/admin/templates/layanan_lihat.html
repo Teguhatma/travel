@@ -54,7 +54,11 @@
                                         <td>
                                             <a href="{{ url_for('admin.layanan_delete', id=layanan.id) }}">delete</a>
                                         </td>
-                                        <td>Edit</td>
+                                        <td>
+                                            <a
+                                                href="{{ url_for('admin.layanan_edit', id=layanan.id, slug=layanan.slug) }}">Edit
+                                            </a>
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
