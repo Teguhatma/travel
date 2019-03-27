@@ -12,7 +12,7 @@ errors pages disisi admin[404, 500](done)
 errors pages disisi users[404, 500](yet) caranya buat dua error dimasing-masing sisi
 WA(done), mail(yet) ada button hubnya secara otomatis direct ke app
 login (done)
-superadmin (yet) dan admin(done)
+admin (done) dan user(done)
 tambah kategori sosisal media di db deskripsi (done)
 slugify(done)
 duplicate title di semua db
@@ -20,12 +20,12 @@ duplicate title di semua db
 --kategori(done)
 --layanan.title(done)
 --contact.email -> routesnya masih error -> check email -> ada sama(db) -> errors -> jika tidak -> success(done)
-forgot password(yet)
 Edit Products (yet)
 Penghapusan Contact (done)
 edit layanan kami (yet)
-badges -> pemberitahuan ada kontak masuk (dashboard)(yet)
 make true false di kategory(yet)-> kategori jika dipake tidak bisa dihapus
 favicon.ico (yet)
-tambah document select di product (yet) -> hanya bisa select file pdf
+tambah document select di product -> hanya bisa select file pdf (done)
 last debug --> (yet)
+reset_password -> belum masuk ke database untuk password
+view untuk superadmin(yet)

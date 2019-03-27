@@ -6,6 +6,8 @@ from .forms import ProductForm, CategoryForm, DescriptionForm, LayananForm, Edit
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
 from config import Config
+from app.models import User, Role
+from app.decorators import admin_required
 import os, uuid
 
 path = os.path.join(admin.static_folder, "uploads/images")
@@ -46,9 +48,15 @@ def dashboard():
 @login_required
 def category_delete(id):
     category = Category.query.filter_by(id=id).first_or_404()
-    db.session.delete(category)
-    db.session.commit()
-    return redirect(url_for("admin.dashboard"))
+    product = Products.query.filter_by(kategori_id=id).first()
+    contact = Contact.query.filter_by(kategori_id=id).first()
+    if category.id != product.kategori_id:
+        db.session.delete(category)
+        db.session.commit()
+        return redirect(url_for("admin.dashboard"))
+    else:
+        flash("Kategori digunakan!","error")
+        return redirect(url_for('admin.dashboard'))
 
 
 @admin.route("product/lihat")
@@ -71,6 +79,7 @@ def product_lihat():
 
 
 @admin.route("/product/create", methods=["POST", "GET"])
+@admin_required
 @login_required
 def product_create():
     form = ProductForm(current_user.username)
@@ -274,3 +283,31 @@ def contact_delete(id):
     db.session.delete(contact)
     db.session.commit()
     return redirect(url_for('admin.contact'))
+
+
+
+@admin.route("/home")
+@login_required
+def lihatuser():
+    user = (
+        db.session.query(
+            User.id,
+            User.username,
+            User.email,
+            Role.name.label("namarole"),
+            Role.permission
+        )
+        .join(Role, Role.id == User.id)
+        .all()
+    )
+    return render_template('lihatuser.html', user=user)
+
+@admin.app_errorhandler(404)
+def not_found_error(e):
+    return render_template("errors/404.html"), 404
+
+
+@admin.app_errorhandler(500)
+def internal_error(e):
+    db.session.rollback()
+    return render_template("500.html"), 500

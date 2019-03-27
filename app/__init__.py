@@ -41,8 +41,4 @@ def create_app(config_class=Config):
 
     app.register_blueprint(auth, url_prefix="/auth")
 
-    from app.errors import errors
-
-    app.register_blueprint(errors)
-
     return app

@@ -55,11 +55,24 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        {{ form.filename_images(class="custom-file-input", id="inputGroupFile04")}}
-                                        <label class="custom-file-label"
-                                            for="inputGroupFile04">{{ form.filename_images.label()}}</label>
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                {{ form.filename_images(class="custom-file-input", id="inputGroupFile04")}}
+                                                <label class="custom-file-label"
+                                                    for="inputGroupFile04">{{ form.filename_images.label()}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                {{ form.file(class="custom-file-input", id="inputGroupFile05", accept="application/pdf")}}
+                                                <label class="custom-file-label"
+                                                    for="inputGroupFile05">{{ form.filename_images.label()}}</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -34,6 +34,7 @@ class ProductForm(FlaskForm):
         get_pk=lambda x: x.id,
     )
     content = CKEditorField()
+    file = FileField("Upload File", validators=[FileAllowed("pdf"), FileRequired()])
     submit = SubmitField("Tambah Data")
 
     def __init__(self, original_title, *args, **kwargs):
@@ -110,6 +111,7 @@ class LayananForm(FlaskForm):
             layanan = Layanan.query.filter_by(title=self.title.data).first()
             if layanan is not None:
                 raise ValidationError("Please use a different username.")
+
 
 class EditLayananForm(FlaskForm):
     title = StringField("Layanan", validators=[DataRequired()])

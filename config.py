@@ -11,12 +11,15 @@ class Config(object):
     TESTING = False
     CSRF_ENABLED = True
 
+    FLASKY_MAIL_SUBJECT_PREFIX = "[Flasky]"
+
     MAIL_SERVER = os.environ.get("MAIL_SERVER")
     MAIL_PORT = int(os.environ.get("MAIL_PORT") or 25)
     MAIL_USE_TLS = os.environ.get("MAIL_USE_TLS") is not None
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
     MAIL_SENDER = os.environ.get("MAIL_SENDER")
+    ADMIN = os.environ.get("ADMIN")
 
 
 class ProductionConfig(Config):
