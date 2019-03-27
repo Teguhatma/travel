@@ -65,6 +65,7 @@ class EditProductForm(FlaskForm):
         get_label="category",
         get_pk=lambda x: x.id,
     )
+    file = FileField("Upload File", validators=[FileAllowed("pdf"), FileRequired()])
     content = CKEditorField()
     submit = SubmitField("Tambah Data")
 

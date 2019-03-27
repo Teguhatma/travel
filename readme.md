@@ -28,4 +28,5 @@ favicon.ico (yet)
 tambah document select di product -> hanya bisa select file pdf (done)
 last debug --> (yet)
 reset_password -> belum masuk ke database untuk password
-view untuk superadmin(yet)
+view untuk superadmin(done)
+mengaktifkan semua flash(yet)

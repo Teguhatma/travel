@@ -12,8 +12,8 @@
             <span>Products</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="{{ url_for('admin.product_create') }}">Tambah Produk</a>
-            <a class="dropdown-item" href="{{ url_for('admin.product_lihat') }}">Lihat Produk</a>
+            <a class="dropdown-item" href="{{ url_for('admin.product_create') }}">Create a Product</a>
+            <a class="dropdown-item" href="{{ url_for('admin.product_lihat') }}">Products Table</a>
         </div>
     </li>
     <li class="nav-item">
@@ -26,23 +26,25 @@
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
-            <span>Layanan</span>
+            <span>Services</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <a class="dropdown-item" href="{{ url_for('admin.layanan_create') }}">Tambah Layanan</a>
-            <a class="dropdown-item" href="{{ url_for('admin.layanan_lihat') }}">Lihat Layanan</a>
+            <a class="dropdown-item" href="{{ url_for('admin.layanan_create') }}">Create a Service</a>
+            <a class="dropdown-item" href="{{ url_for('admin.layanan_lihat') }}">Services Table</a>
         </div>
     </li>
+    {% if current_user.role_id==3 %}
     <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="{{ url_for('admin.lihat_user') }}">
             <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span>
+            <span>User</span>
         </a>
     </li>
+    {% endif %}
     <li class="nav-item">
         <a class="nav-link" href="{{ url_for('admin.deskripsi')}}">
             <i class="fas fa-fw fa-table"></i>
-            <span>Deskripsi</span>
+            <span>Description</span>
         </a>
     </li>
 </ul>

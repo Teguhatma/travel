@@ -42,8 +42,6 @@ def logout():
 
 @auth.route("/reset", methods=["GET", "POST"])
 def password_reset_request():
-    if not current_user.is_anonymous:
-        return redirect(url_for("admin.dashboard"))
     form = PasswordResetRequestForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()

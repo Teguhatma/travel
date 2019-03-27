@@ -16,6 +16,11 @@ path = os.path.join(admin.static_folder, "uploads/images")
 @admin.route("/dashboard", methods=["GET", "POST"])
 @login_required
 def dashboard():
+    count_product = db.session.query(Products.id).count()
+    count_layanan = db.session.query(Layanan.id).count()
+    count_kategori = db.session.query(Category.id).count()
+    count_contacts = db.session.query(Contact.id).count()
+
     products = (
         db.session.query(
             Products.id,
@@ -40,7 +45,7 @@ def dashboard():
         title="Dashboard",
         products=products,
         categorys=categorys,
-        form=form,
+        form=form, count_product = count_product, count_contacts=count_contacts, count_layanan=count_layanan, count_kategori=count_kategori
     )
 
 
@@ -79,7 +84,6 @@ def product_lihat():
 
 
 @admin.route("/product/create", methods=["POST", "GET"])
-@admin_required
 @login_required
 def product_create():
     form = ProductForm(current_user.username)
@@ -286,21 +290,23 @@ def contact_delete(id):
 
 
 
-@admin.route("/home")
+@admin.route("/users")
 @login_required
-def lihatuser():
+@admin_required
+def lihat_user():
     user = (
         db.session.query(
             User.id,
             User.username,
             User.email,
+            User.confirmed,
             Role.name.label("namarole"),
             Role.permission
         )
-        .join(Role, Role.id == User.id)
+        .join(Role)
         .all()
     )
-    return render_template('lihatuser.html', user=user)
+    return render_template('lihat_user.html', user=user)
 
 @admin.app_errorhandler(404)
 def not_found_error(e):

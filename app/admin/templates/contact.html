@@ -21,15 +21,16 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="#">Dashboard</a>
+                        <a href="{{ url_for('admin.dashboard') }}">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">Overview</li>
+                    <li class="breadcrumb-item">Contact</li>
+                    <li class="breadcrumb-item active">List Contact Data</li>
                 </ol>
                 <!-- DataTables Example -->
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Tabel Produk
+                        Contacts Table
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -40,7 +41,7 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Category</th>
-                                        <th>No. Handphone</th>
+                                        <th>Handphone</th>
                                         <th>Messages</th>
                                         <th>Action</th>
                                     </tr>

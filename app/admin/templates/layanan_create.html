@@ -21,12 +21,13 @@
             <div class="container-fluid">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="#">Dashboard</a>
+                        <a href="{{ url_for('admin.dashboard') }}">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">Overview</li>
+                    <li class="breadcrumb-item">Services</li>
+                    <li class="breadcrumb-item active">Create a New Service</li>
                 </ol>
                 <div class="card mb-3">
-                    <div class="card-header">Tambah Data Layanan</div>
+                    <div class="card-header">Create Service Form</div>
                     <div class="card-body">
                         <form action="" enctype="multipart/form-data" method="POST">
                             {{ form.csrf_token() }}

@@ -21,47 +21,39 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="{{ url_for('admin.dashboard') }}">Dashboard</a>
+                        <a href="#">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item">Products</li>
-                    <li class="breadcrumb-item active">List Products</li>
+                    <li class="breadcrumb-item active">Overview</li>
                 </ol>
                 <!-- DataTables Example -->
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Products Table</div>
+                        Tabel Data Layanan</div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th scope="col">Id</th>
-                                        <th scope="col">Package Name</th>
-                                        <th scope="col">Category</th>
-                                        <th>Description</th>
-                                        <th>Image</th>
-                                        <th colspan="2" scope="col">Action</th>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Role</th>
+                                        <th>Status</th>
+                                        <th>Email</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for product in products %}
+                                    {% for user in user %}
                                     <tr>
-                                        <th scope="row">{{ product.id }}</th>
-                                        <td>{{ product.title }}</td>
-                                        <td>{{ product.category }}</td>
-                                        <td>{{ product.content | striptags }}</td>
-                                        <td><img src=" {{ url_for('admin.static', filename='uploads/images/'+ product.filename_images ) }}"
-                                                alt="{{ product.filename_images }}" width="200px"></td>
-                                        <td><a class="button"
-                                                href="{{ url_for('admin.product_update', id=product.id, slug=product.slug) }}">Edit</a>
-                                        </td>
-                                        <td>
-                                            <form action="{{ url_for('admin.delete_product', id=product.id) }}" ,
-                                                method="POST">
-                                                <button class="button">Delete</button>
-                                            </form>
-                                        </td>
+                                        <td>{{ user.id }}</td>
+                                        <td>{{ user.username }}</td>
+                                        <td>{{ user.namarole }}</td>
+                                        <td>{{ user.confirmed }}</td>
+                                        <td>{{ user.email}}</td>
+                                        <td><a href="{{ url_for('auth.password_reset_request') }}">Reset Password</a> |
+                                            Change
+                                            Email | Hapus</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>

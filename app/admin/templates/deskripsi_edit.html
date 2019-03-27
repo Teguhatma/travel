@@ -21,12 +21,13 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="#">Dashboard</a>
+                        <a href="{{ url_for('admin.dashboard') }}">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">Overview</li>
+                    <li class="breadcrumb-item">Description</li>
+                    <li class="breadcrumb-item active">Edit a Description</li>
                 </ol>
                 <!-- DataTables Example -->
-                <div class="card-header">Edit Data Desripsi</div>
+                <div class="card-header">Edit Description Form</div>
                 <div class="card-body">
                     <form action="" method="POST">
                         {{ form.csrf_token() }}

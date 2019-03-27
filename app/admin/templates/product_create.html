@@ -22,11 +22,11 @@
                     <li class="breadcrumb-item">
                         <a href="{{ url_for('admin.dashboard') }}">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item"><a href="">Produk</a></li>
-                    <li class="breadcrumb-item active">Tambah Data Produk</li>
+                    <li class="breadcrumb-item">Products</li>
+                    <li class="breadcrumb-item active">Create a New Product</li>
                 </ol>
                 <div class="card mb-3">
-                    <div class="card-header">Tambah Data Produk</div>
+                    <div class="card-header">Create Product Form</div>
                     <div class="card-body">
                         <form action="" enctype="multipart/form-data" method="POST">
                             {{ form.csrf_token() }}
