@@ -1,4 +1,3 @@
-Fitur:
 add Kategori (done)
 add Products (done)
 delete Products (done)
@@ -20,13 +19,13 @@ duplicate title di semua db
 --kategori(done)
 --layanan.title(done)
 --contact.email -> routesnya masih error -> check email -> ada sama(db) -> errors -> jika tidak -> success(done)
-Edit Products (yet)
 Penghapusan Contact (done)
-edit layanan kami (yet)
-make true false di kategory(yet)-> kategori jika dipake tidak bisa dihapus
-favicon.ico (yet)
-tambah document select di product -> hanya bisa select file pdf (done)
-last debug --> (yet)
-reset_password -> belum masuk ke database untuk password
 view untuk superadmin(done)
-mengaktifkan semua flash(yet)
+mengaktifkan semua flash(done)
+Edit Products (yet)
+edit layanan kami (yet)
+tampilan reset(yet)
+favicon.ico (yet)
+reset_password -> belum masuk ke database untuk password(done)
+make true false di kategory(yet)-> kategori jika dipake tidak bisa dihapus
+tambah document select di product -> hanya bisa select file pdf (done) -> file yang di upload belum kesimpen di database (done)

@@ -34,7 +34,7 @@ class ProductForm(FlaskForm):
         get_pk=lambda x: x.id,
     )
     content = CKEditorField()
-    file = FileField("Upload File", validators=[FileAllowed("pdf"), FileRequired()])
+    file = FileField("Upload File", validators=[FileAllowed(["pdf"]), FileRequired()])
     submit = SubmitField("Tambah Data")
 
     def __init__(self, original_title, *args, **kwargs):

@@ -14,6 +14,7 @@ from app.admin import admin
 from app.email import send_email
 from werkzeug.urls import url_parse
 from app import db
+from app.decorators import admin_required
 
 
 @auth.route("/login", methods=["GET", "POST"])
@@ -41,6 +42,7 @@ def logout():
 
 
 @auth.route("/reset", methods=["GET", "POST"])
+@admin_required
 def password_reset_request():
     form = PasswordResetRequestForm()
     if form.validate_on_submit():
@@ -54,7 +56,10 @@ def password_reset_request():
                 user=user,
                 token=token,
             )
-        flash("An email with instructions to reset your password has been sent to you.")
+        flash(
+            "An email with instructions to reset your password has been sent to you.",
+            "success",
+        )
         return redirect(url_for("auth.login"))
     return render_template("reset_request_password.html", form=form)
 
@@ -67,7 +72,7 @@ def password_reset(token):
     if form.validate_on_submit():
         if User.reset_password(token, form.password.data):
             db.session.commit()
-            flash("Your password has been updated.")
+            flash("Your password has been updated.", "success")
             return redirect(url_for("auth.login"))
         else:
             return redirect(url_for("admin.dashboard"))
@@ -94,6 +99,7 @@ def unconfirmed():
 
 
 @auth.route("/register", methods=["GET", "POST"])
+@admin_required
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -104,12 +110,12 @@ def register():
         )
         db.session.add(user)
         db.session.commit()
-        flash("You can now login.")
+        flash("You can now login.", "success")
         token = user.generate_confirmation_token()
         send_email(
             user.email, "Confirm your account", "email/confirm", user=user, token=token
         )
-        flash("A confirmation email has been sent to you by email.")
+        flash("A confirmation email has been sent to you by email.", "success")
         return redirect(url_for("auth.login"))
     return render_template("register.html", form=form)
 
@@ -121,9 +127,9 @@ def confirm(token):
         return redirect(url_for("admin.dashboard"))
     if current_user.confirm(token):
         db.session.commit()
-        flash("You have confirmed your account. Thanks!")
+        flash("You have confirmed your account. Thanks!", "success")
     else:
-        flash("The confirmation link is invalid or has expired.")
+        flash("The confirmation link is invalid or has expired.", "success")
     return redirect(url_for("auth.login"))
 
 
@@ -138,7 +144,7 @@ def resend_confirmation():
         user=current_user,
         token=token,
     )
-    flash("A new confirmation email has been sent to you by email.")
+    flash("A new confirmation email has been sent to you by email.", "success")
     return redirect(url_for("admin.dashboard"))
 
 
@@ -151,7 +157,7 @@ def change_password():
             current_user.password = form.password.data
             db.session.add(current_user)
             db.session.commit()
-            flash("Your password has been update.")
+            flash("Your password has been update.", "success")
             return redirect(url_for("admin.dashboard"))
         else:
             flash("Invalid Password")
@@ -174,11 +180,12 @@ def change_email_request():
                 token=token,
             )
             flash(
-                "An email with instructions to confirm your new email address has been sent to you."
+                "An email with instructions to confirm your new email address has been sent to you.",
+                "success",
             )
             return redirect(url_for("admin.dashboard"))
         else:
-            flash("Invalid email or password")
+            flash("Invalid email or password", "error")
     return render_template("change_email.html", form=form)
 
 
@@ -187,8 +194,8 @@ def change_email_request():
 def change_email(token):
     if current_user.change_email(token):
         db.session.commit()
-        flash("Your email address has been updated.")
+        flash("Your email address has been updated.", "success")
     else:
-        flash("Invalid request.")
+        flash("Invalid request.", "error")
     return redirect(url_for("admin.dashboard"))
 

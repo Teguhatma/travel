@@ -27,10 +27,12 @@
                     <li class="breadcrumb-item active">List Products</li>
                 </ol>
                 <!-- DataTables Example -->
+                {% include 'loader/_flash_success.html' %}
                 <div class="card mb-3">
                     <div class="card-header">
                         <i class="fas fa-table"></i>
-                        Products Table</div>
+                        Products Table
+                    </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -41,7 +43,7 @@
                                         <th scope="col">Category</th>
                                         <th>Description</th>
                                         <th>Image</th>
-                                        <th colspan="2" scope="col">Action</th>
+                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -53,14 +55,16 @@
                                         <td>{{ product.content | striptags }}</td>
                                         <td><img src=" {{ url_for('admin.static', filename='uploads/images/'+ product.filename_images ) }}"
                                                 alt="{{ product.filename_images }}" width="200px"></td>
-                                        <td><a class="button"
-                                                href="{{ url_for('admin.product_update', id=product.id, slug=product.slug) }}">Edit</a>
-                                        </td>
                                         <td>
-                                            <form action="{{ url_for('admin.delete_product', id=product.id) }}" ,
-                                                method="POST">
-                                                <button class="button">Delete</button>
-                                            </form>
+                                            <a class="button"
+                                                href="{{ url_for('admin.product_update', id=product.id, slug=product.slug) }}">
+                                                Edit
+                                            </a>
+                                            |
+                                            <a href="{{ url_for('admin.delete_product', id=product.id) }}"
+                                                class="button">
+                                                Delete
+                                            </a>
                                         </td>
                                     </tr>
                                     {% endfor %}

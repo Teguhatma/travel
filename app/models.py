@@ -81,6 +81,7 @@ def choice_category():
 
 class Products(db.Model):
     __tablename__ = "Products"
+    __maxsize__ = 16000000
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64), unique=True)
@@ -90,7 +91,8 @@ class Products(db.Model):
     filename_images = db.Column(db.String(64), unique=True)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     kategori_id = db.Column(db.Integer, db.ForeignKey("kategori.id"))
-    file = db.Column(db.String(120))
+    file_filename = db.Column(db.String(500))
+    file = db.Column(db.LargeBinary(__maxsize__))
 
     @staticmethod
     def generate_slug(target, value, oldvalue, initiator):
@@ -185,20 +187,11 @@ class User(UserMixin, db.Model):
     
     def generate_reset_token(self, expiration=3600):
         s = Serializer(current_app.config['SECRET_KEY'], expiration)
-        try:
-            data = s.loads(token.encode('utf-8'))
-        except:
-            return False
-        user = User.query.get(data.get('reset'))
-        if user is None:
-            return False
-        user.password = new_password
-        db.session.add(user)
-        return True
+        return s.dumps({'reset': self.id}).decode('utf-8')
 
     @staticmethod
-    def reset_password(token, expiration=3600):
-        s = Serializer(current_app.config['SECRET_KEY'], expiration)
+    def reset_password(token, new_password):
+        s = Serializer(current_app.config['SECRET_KEY'])
         try:
             data = s.loads(token.encode('utf-8'))
         except:

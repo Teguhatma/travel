@@ -92,6 +92,8 @@
             </div>
           </div>
         </div>
+        {% include 'loader/_flash_success.html' %}
+        {% include 'loader/_flash_error.html' %}
 
         <div class="card mb-5">
           <div class="card-header">
@@ -105,18 +107,6 @@
                 <div class="form-group">
                   <div class="form-row">
                     <div class="col-md-4">
-                      {% with errors = get_flashed_messages(category_filter=["error"]) %}
-                      {% if errors %}
-                      <div class="alert-message block-message error">
-                        <a class="close" href="#">×</a>
-                        <ul>
-                          {%- for msg in errors %}
-                          <li>{{ msg }}</li>
-                          {% endfor -%}
-                        </ul>
-                      </div>
-                      {% endif %}
-                      {% endwith %}
                       <div class="form-label-group">
                         {{ form.title(type="text", id="namaProduk", class="form-control", placeholder="Tambah Kategori", required="required", autofocus="autofocus")}}
                         <label for="namaProduk">Tambah Kategori</label>

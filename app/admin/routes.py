@@ -39,6 +39,7 @@ def dashboard():
         category = Category(category=form.title.data)
         db.session.add(category)
         db.session.commit()
+        flash('Category has been created.', 'success')
         return redirect(url_for("admin.dashboard"))
     return render_template(
         "index.html",
@@ -58,6 +59,7 @@ def category_delete(id):
     if category.id != product.kategori_id:
         db.session.delete(category)
         db.session.commit()
+        flash('Category has been deleted.', 'success')
         return redirect(url_for("admin.dashboard"))
     else:
         flash("Kategori digunakan!","error")
@@ -92,22 +94,25 @@ def product_create():
         os.makedirs(path)
 
     if form.validate_on_submit():
-        filename = secure_filename(form.filename_images.data.filename)
-        ext = filename.split(".")[-1]
-        filename = "%s.%s" % (uuid.uuid4().hex, ext)
-        destination_save = "/".join([path, filename])
+        filenames = secure_filename(form.filename_images.data.filename)
+        ext = filenames.split(".")[-1]
+        filenames = "%s.%s" % (uuid.uuid4().hex, ext)
+        destination_save = "/".join([path, filenames])
         form.filename_images.data.save(destination_save)
 
         products = Products(
             title=form.title.data,
             price=form.price.data,
-            filename_images=filename,
+            filename_images=filenames,
+            file = form.file.data.read(),
+            file_filename = form.file.data.filename,
             content=form.content.data,
-            kategori_id=form.category.data.id,
+            kategori_id=form.category.data.id
         )
         db.session.add(products)
         db.session.commit()
-        return redirect(url_for("admin.dashboard"))
+        flash('Product has been created.', 'success')
+        return redirect(url_for("admin.product_lihat"))
     return render_template("product_create.html", title="Tambah Data", form=form)
 
 
@@ -120,7 +125,8 @@ def delete_product(id):
     os.remove(destination_del)
     db.session.delete(products)
     db.session.commit()
-    return redirect(url_for("admin.dashboard"))
+    flash('Product has been deleted.', 'success')
+    return redirect(url_for("admin.product_lihat"))
 
 
 @admin.route("/product/<int:id>/<slug>/update", methods=["GET", "POST"])
@@ -146,7 +152,8 @@ def product_update(slug,id):
         products.filename_images = filename
         products.title = form.title.data
         db.session.commit()
-        return redirect(url_for("admin.dashboard"))
+        flash('Product has been edited.', 'success')
+        return redirect(url_for("admin.product_lihat"))
     elif request.method == "GET":
         form.title.data = products.title
         form.price.data = products.price
@@ -197,6 +204,7 @@ def deskripsi_edit(id):
         deskripsi.sm_ig = form.sm_ig.data
         deskripsi.sm_wa = form.sm_wa.data
         db.session.commit()
+        flash('Description has been edited.', 'success')
         return redirect(url_for("admin.deskripsi"))
     elif request.method == "GET":
         form.email.data = deskripsi.email
@@ -237,7 +245,8 @@ def layanan_create():
         )
         db.session.add(layanan)
         db.session.commit()
-        return redirect(url_for("admin.dashboard"))
+        flash('Service has been created.', 'success')
+        return redirect(url_for("admin.layanan_lihat"))
     return render_template("layanan_create.html", title="Tambah Data", form=form)
 
 
@@ -261,6 +270,7 @@ def layanan_edit(slug, id):
         layanan.filename_images = filename
         layanan.content = form.content.data
         db.session.commit()
+        flash('Service has been edited.', 'success')
         return redirect(url_for("admin.layanan_lihat"))
     elif request.method == "GET":
         form.title.data = layanan.title
@@ -278,6 +288,7 @@ def layanan_delete(id):
     os.remove(destination_del)
     db.session.delete(layanan)
     db.session.commit()
+    flash('Service has been deleted.', 'success')
     return redirect(url_for("admin.layanan_lihat"))
 
 @admin.route('/contact/<int:id>/delete')
@@ -286,6 +297,7 @@ def contact_delete(id):
     contact = Contact.query.filter_by(id=id).first_or_404()
     db.session.delete(contact)
     db.session.commit()
+    flash('Contact has been deleted.', 'success')
     return redirect(url_for('admin.contact'))
 
 
@@ -316,4 +328,4 @@ def not_found_error(e):
 @admin.app_errorhandler(500)
 def internal_error(e):
     db.session.rollback()
-    return render_template("500.html"), 500
+    return render_template("errors/500.html"), 500
