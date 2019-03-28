@@ -105,4 +105,4 @@ venv.bak/
 
 .vscode/
 
-app/admin/uploads/images/
+app/admin/static/uploads/images/
