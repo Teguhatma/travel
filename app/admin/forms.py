@@ -72,7 +72,7 @@ class EditProductForm(FlaskForm):
 
 class CategoryForm(FlaskForm):
     title = StringField("Tambah Kategori", validators=[DataRequired()])
-    submit = SubmitField("submit")
+    submit = SubmitField("Tambah Kategori")
 
     def validate_title(self, title):
         category = Category.query.filter_by(category=title.data).first()

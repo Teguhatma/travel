@@ -22,10 +22,13 @@ duplicate title di semua db
 Penghapusan Contact (done)
 view untuk superadmin(done)
 mengaktifkan semua flash(done)
+favicon.ico (done)
+tambah document select di product -> hanya bisa select file pdf (done) -> file yang di upload belum kesimpen di database (done)
+reset_password -> belum masuk ke database untuk password(done)
+
 Edit Products (yet)
 edit layanan kami (yet)
 tampilan reset(yet)
-favicon.ico (yet)
-reset_password -> belum masuk ke database untuk password(done)
+log errors (yet)
 make true false di kategory(yet)-> kategori jika dipake tidak bisa dihapus
-tambah document select di product -> hanya bisa select file pdf (done) -> file yang di upload belum kesimpen di database (done)
+length di form belum ditambahkan

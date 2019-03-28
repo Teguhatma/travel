@@ -101,37 +101,33 @@
             Create a New Category
           </div>
           <div class="card-body">
-            <div class="table-responsive">
-              <form action="{{ url_for('admin.dashboard') }}" method="POST">
-                {{ form.csrf_token() }}
-                <div class="form-group">
-                  <div class="form-row">
-                    <div class="col-md-4">
-                      <div class="form-label-group">
-                        {{ form.title(type="text", id="namaProduk", class="form-control", placeholder="Tambah Kategori", required="required", autofocus="autofocus")}}
-                        <label for="namaProduk">Tambah Kategori</label>
-                        {% for error in form.title.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                      </div>
-                      <div class="my-2">
-                        {{ form.submit(class="btn btn-primary btn-sm")}}
-                      </div>
+            <div class="row">
+              <div class="col-md-4">
+                <form action="{{ url_for('admin.dashboard') }}" method="POST">
+                  {{ form.csrf_token() }}
+                  <div class="form-group">
+                    <div class="form-label-group">
+                      {{ form.title(type="text", id="namaProduk", class="form-control", placeholder="Tambah Kategori", required="required", autofocus="autofocus")}}
+                      <label for="namaProduk">Tambah Kategori</label>
+                      {% for error in form.title.errors %}
+                      <span style="color: red;">[{{ error }}]</span>
+                      {% endfor %}
                     </div>
-                    <div class="col-md-7">
-                      <div class="form-group">
-                        {% for category in categorys %}
-                        <ul>
-                          <li>{{ category.category }}
-                            <a href="{{ url_for('admin.category_delete', id=category.id) }}">delete</a>
-                          </li>
-                        </ul>
-                        {% endfor %}
-                      </div>
+                    <div class="my-2">
+                      {{ form.submit(class="btn btn-primary btn-sm")}}
                     </div>
                   </div>
-                </div>
-              </form>
+                </form>
+              </div>
+              <div class="col-md-8">
+                <ul class="list-inline">
+                  {% for category in categorys %}
+                  <li class="list-inline-item btn-outline-primary btn btn-sm disabled">{{ category.category }}<span
+                      class="badge badge-success">23</span>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
             </div>
           </div>
         </div>

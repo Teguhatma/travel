@@ -1,6 +1,6 @@
 from app import db
 from app.admin import admin
-from flask import render_template, url_for, redirect, request, flash
+from flask import render_template, url_for, redirect, request, flash, send_from_directory
 from app.models import Products, Category, Contact, Country, Description, Layanan
 from .forms import ProductForm, CategoryForm, DescriptionForm, LayananForm, EditProductForm, EditLayananForm
 from werkzeug.utils import secure_filename
@@ -11,6 +11,11 @@ from app.decorators import admin_required
 import os, uuid
 
 path = os.path.join(admin.static_folder, "uploads/images")
+
+@admin.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 @admin.route("/dashboard", methods=["GET", "POST"])
